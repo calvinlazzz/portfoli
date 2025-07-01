@@ -31,7 +31,8 @@ services:
     autoDeploy: true # Enable auto-deploy
     # plan: free
 
+databases:
   - type: postgres
-    name: my-portfolio-db # Name for your PostgreSQL database
+    name: projects # Name for your PostgreSQL database
     # Default plan is usually enough for free tier
     # plan: free
