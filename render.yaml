@@ -1,23 +1,22 @@
 # portfoli/render.yaml
 
 services:
-  # Frontend Service (Static Site)
-  - type: web # This is the correct type for both static sites and web services
+  # Frontend Service (Static Site) - CORRECTED
+  - type: web           # Correct general type for web services and static sites
     name: portfolio-app
-    runtime: static # *** ADD THIS LINE *** - Tells Render this is a static site
-    # env: node # REMOVE THIS LINE - not needed for static runtime
-    # plan: free # Optional, defaults to free if available
+    runtime: static     # *** THIS IS CRUCIAL: Tells Render it's a static site ***
+    # startCommand: npm start
+    plan: free          # Optional, defaults to free if available
     rootDir: client
-    buildCommand: npm install && npm run build
-    publishPath: client/build # This is valid ONLY when runtime: static is set
+    buildCommand: npm install && npm run build # Installs dependencies and builds your React app
+    publishPath: client/build                  # This is now valid because runtime: static is set
 
-  # Backend Service (Node.js Web Service)
-  - type: web # Correct type for a Node.js web service
+  # Backend Service (Node.js Web Service) - REMAINS THE SAME, as it's correctly configured
+  - type: web
     name: portfolio-app-server
-    env: node # This indicates it's a Node.js environment
+    env: node           # Correctly identifies it as a Node.js environment
     # You could also use: runtime: node (alternative to env: node)
-    # plan: free # Optional
+    plan: free
     rootDir: server
     buildCommand: npm install
-    startCommand: npm run migrate:latest && node src/app.js # Assuming you've set up migrations
-
+    startCommand: npm run migrate:latest && node src/app.js 
