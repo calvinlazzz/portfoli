@@ -6,7 +6,7 @@ services:
     name: portfolio-app
     runtime: static     # *** THIS IS CRUCIAL: Tells Render it's a static site ***
     # startCommand: npm start
-    plan: free          # Optional, defaults to free if available
+    #plan: free          # Optional, defaults to free if available
     rootDir: client
     buildCommand: npm install && npm run build # Installs dependencies and builds your React app
     staticPublishPath: build
