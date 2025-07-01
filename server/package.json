@@ -5,12 +5,19 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "knex": "knex",
+    "migrate:make": "knex migrate:make -x js --cwd .",
+    "migrate:latest": "knex migrate:latest --cwd .",
+    "seed:run": "knex seed:run --cwd ."
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "body-parser": "^1.19.0"
+    "express": "^4.17.1",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3",
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

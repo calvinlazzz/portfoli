@@ -10,8 +10,10 @@ services:
     startCommand: node src/app.js # Or 'npm start' if you have a start script in server/package.json
     # Port your Node.js app listens on (Render automatically sets the PORT env var)
     envVars:
-      - key: DATABASE_URL # Environment variable for your database connection string
-        value: ${MY_PORTFOLIO_DB.internalConnectionString} # Links to the Render PostgreSQL service
+      - key: DATABASE_URL # This will hold your Supabase connection string
+        sync: false # Set to false to manually add in Render Dashboard for security
+      - key: NODE_ENV # Important for Knex to pick 'production' config
+        value: production
       # Add any other sensitive environment variables here
       # - key: SECRET_KEY
       #   sync: false # Set to false if you want to manually manage this in Render dashboard for production
