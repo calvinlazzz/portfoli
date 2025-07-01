@@ -1,14 +1,13 @@
 # Example render.yaml (adjust paths and commands as needed)
 services:
-  - type: web_service
+  - type: web
     name: my-portfolio-api # Name for your backend service
     env: node
     # Root directory of your backend code within the monorepo
     # Assuming your backend is in 'server/'
     rootDir: server/
     buildCommand: npm install
-    startCommand: node src/app.js # Or 'npm start' if you have a start script in server/package.json
-    # Port your Node.js app listens on (Render automatically sets the PORT env var)
+    startCommand: npm run migrate:latest && node src/app.js    # Port your Node.js app listens on (Render automatically sets the PORT env var)
     envVars:
       - key: DATABASE_URL # This will hold your Supabase connection string
         sync: false # Set to false to manually add in Render Dashboard for security
@@ -21,8 +20,9 @@ services:
     # Free instances may spin down after inactivity
     # plan: free # Specify free plan
 
-  - type: static_site
+  - type: web
     name: my-portfolio-frontend # Name for your frontend service
+    runtime: static # Crucial for static sites when type is 'web'
     # Root directory of your frontend code within the monorepo
     # Assuming your frontend is in 'client/'
     rootDir: client/
