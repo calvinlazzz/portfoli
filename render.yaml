@@ -8,7 +8,7 @@ services:
     # startCommand: npm start
     #plan: free          # Optional, defaults to free if available
     rootDir: client
-    buildCommand: npm install && npm run build # Installs dependencies and builds your React app
+    buildCommand: npm install && npm run lint && npm test && npm run build # Lint, test, then build React app
     staticPublishPath: build
   # Backend Service (Node.js Web Service) - REMAINS THE SAME, as it's correctly configured
   - type: web
@@ -17,5 +17,5 @@ services:
     # You could also use: runtime: node (alternative to env: node)
     plan: free
     rootDir: server
-    buildCommand: npm install
-    startCommand: npm run migrate:latest && node src/app.js 
+    buildCommand: npm install && npm run lint && npm test
+    startCommand: npm run migrate:latest && node src/app.js

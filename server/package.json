@@ -9,7 +9,9 @@
     "knex": "knex",
     "migrate:make": "knex migrate:make -x js --cwd .",
     "migrate:latest": "knex migrate:latest --cwd .",
-    "seed:run": "knex seed:run --cwd ."
+    "seed:run": "knex seed:run --cwd .",
+    "lint": "eslint ./src",
+    "test": "echo \"No tests yet\" && exit 0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
