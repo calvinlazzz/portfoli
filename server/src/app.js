@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const apiRoutes = require('./routes/api');
-const knex = require('knex')(require('../knexfile').production); // Use production config for deployed environment
-
+const knex = require('./db');
 const app = express();
 const PORT = process.env.PORT || 5000;
 

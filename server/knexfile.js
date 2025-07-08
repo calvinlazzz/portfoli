@@ -1,8 +1,16 @@
-// Update this file with your actual password in the connection string.
+const path = require('path'); // 
+
+
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+console.log('Knexfile: DATABASE_URL (for development):', process.env.DATABASE_URL); // ADD THIS LINE
+
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgresql://postgres:[YOUR-PASSWORD]@db.iqzpsufstbwkohoxllxy.supabase.co:5432/postgres',
+    connection: {
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false } // For development only
+    },    
     migrations: {
       directory: './migrations'
     },
@@ -12,14 +20,17 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: {
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false } // For development only
+    },
     migrations: {
       directory: './migrations'
     },
     seeds: {
     },
     seeds: {
-      directory: './db/seeds'
+      directory: './seeds'
     }
   }
 };
