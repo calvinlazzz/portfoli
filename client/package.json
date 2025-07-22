@@ -14,6 +14,11 @@
         "react-scripts": "5.0.1",
         "web-vitals": "^2.1.4"
     },
+    "devDependencies": { 
+    "eslint": "^8.x.x",
+    "eslint-config-react-app": "^7.x.x",
+    "prettier": "^3.x.x"
+    },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
