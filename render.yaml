@@ -18,4 +18,4 @@ services:
     plan: free
     rootDir: server
     buildCommand: npm install && npm test
-    startCommand: npm run migrate:latest && node src/app.js
+    startCommand: node src/app.js
