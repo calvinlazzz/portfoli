@@ -6,11 +6,6 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "knex": "knex",
-    "migrate:make": "knex migrate:make -x js --cwd .",
-    "migrate:latest": "knex migrate:latest --cwd .",
-    "seed:run": "knex seed:run --cwd .",
-    "lint": "eslint ./src",
     "test": "echo \"No tests yet\" && exit 0"
   },
   "dependencies": {
@@ -20,6 +15,7 @@
     "postgres": "^3.4.7"
   },
   "devDependencies": {
+    "eslint": "^9.31.0",
     "nodemon": "^2.0.7"
   },
   "engines": {
