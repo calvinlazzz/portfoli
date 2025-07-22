@@ -3,11 +3,11 @@ import React from 'react';
 // import an image if used in this section
 // import headshot from '../assets/images/headshot.jpg';
 
-const Experience = () => {
+const Contact = () => {
   return (
     <section className="hero-section">
       <div className="hero-content">
-        <h1>Work Experience</h1>
+        <h1>Contact Me</h1>
         <p>I'm a QA Engineer specializing in DeviceOS/platform with a passion for software quality and development.</p>
         <button className="cta-button">View My Work</button>
       </div>
@@ -15,4 +15,4 @@ const Experience = () => {
   );
 };
 
-export default Experience;
+export default Contact;

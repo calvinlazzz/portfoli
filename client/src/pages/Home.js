@@ -1,6 +1,5 @@
 // portfoli/client/src/pages/Home.js
 import React from 'react';
-import './Home.css'; // Import component-specific CSS if needed
 // import an image if used in this section
 // import headshot from '../assets/images/headshot.jpg';
 
