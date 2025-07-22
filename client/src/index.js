@@ -1,16 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // Import from 'react-dom/client'
-import './styles/main.css'; // Make sure this path is correct if you moved it
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import theme from './theme'; // Import your theme
 import App from './App';
-import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
-
+import './styles/main.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline /> {/* This resets CSS for consistency */}
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
-  </BrowserRouter>
 );
-

@@ -1,28 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css'; // Assuming you will create a separate CSS file for Navbar styling
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 const Navbar = () => {
     return (
-        <nav className="navbar">
-            <div className="navbar-brand">
-                <Link to="/">My Portfolio</Link>
-            </div>
-            <ul className="navbar-links">
-                <li>
-                    <Link to="/about">About</Link>
-                </li>
-                <li>
-                    <Link to="/portfolio">Portfolio</Link>
-                </li>
-                <li>
-                    <Link to="/experience">Experience</Link>
-                </li>
-                <li>
-                    <Link to="/contact">Contact</Link>
-                </li>
-            </ul>
-        </nav>
+        <AppBar position="static">
+            <Toolbar>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        My Portfolio
+                    </Link>
+                </Typography>
+                <Button color="inherit" component={Link} to="/about">About</Button>
+                <Button color="inherit" component={Link} to="/portfolio">Portfolio</Button>
+                <Button color="inherit" component={Link} to="/experience">Experience</Button>
+                <Button color="inherit" component={Link} to="/contact">Contact</Button>
+            </Toolbar>
+        </AppBar>
     );
 };
 
