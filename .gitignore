@@ -1,1 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+dist/
+.parcel-cache/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment variables
 .env
+.env.local
+
+# OS-specific files
+.DS_Store

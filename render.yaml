@@ -17,5 +17,5 @@ services:
     # You could also use: runtime: node (alternative to env: node)
     plan: free
     rootDir: server
-    buildCommand: npm install && npm test
+    buildCommand: npm install && npm run lint && npm test
     startCommand: node src/app.js
