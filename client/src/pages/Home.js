@@ -1,11 +1,14 @@
 import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { WavyBackground } from '../components/WavyBackground'; // Import the component
 
 const MotionButton = motion(Button);
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <WavyBackground backgroundFill="#121212" />
@@ -35,12 +38,12 @@ const Home = () => {
           size="large"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/portfolio')}
         >
           View My Work
         </MotionButton>
       </Container>
     </Box>
-    
     </>
 
   );

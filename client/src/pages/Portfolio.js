@@ -62,6 +62,7 @@ const Portfolio = () => {
 
   return (
     <HeroParallax products={projects} />
+
   );
 };
 

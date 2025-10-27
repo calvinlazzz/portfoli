@@ -18,7 +18,7 @@ app.get('/api/projects', async (req, res) => {
         id: 1,
         name: "My Awesome Project 1",
         description: "A description of my first project.",
-        imageUrl: "/images/project1.png",
+        imageUrl: "/images/p1.jpeg", // Updated path
         liveUrl: "https://project1.com",
         githubUrl: "https://github.com/youruser/project1",
         technologiesUsed: ["React", "Node.js"]
@@ -27,7 +27,25 @@ app.get('/api/projects', async (req, res) => {
         id: 2,
         name: "Cool App Demo",
         description: "This app does cool things.",
-        imageUrl: "/images/project2.png",
+        imageUrl: "/images/p2.png",
+        liveUrl: "https://project2.com",
+        githubUrl: "https://github.com/youruser/project2",
+        technologiesUsed: ["React", "Express", "PostgreSQL"]
+    },
+    {
+        id: 3,
+        name: "Cool App Demo2",
+        description: "This app does cool things.",
+        imageUrl: "/images/p3.png",
+        liveUrl: "https://project2.com",
+        githubUrl: "https://github.com/youruser/project2",
+        technologiesUsed: ["React", "Express", "PostgreSQL"]
+    },
+    {
+        id: 4,
+        name: "Cool App Demo3",
+        description: "This app does cool things.",
+        imageUrl: "/images/p4.png",
         liveUrl: "https://project2.com",
         githubUrl: "https://github.com/youruser/project2",
         technologiesUsed: ["React", "Express", "PostgreSQL"]
