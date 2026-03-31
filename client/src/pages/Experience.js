@@ -36,9 +36,9 @@ const experiences = [
 ];
 
 const education = {
-  degree: 'BA Computer Science (150 credits completed)',
+  degree: 'BA Computer Science',
   school: 'University of California, Santa Cruz',
-  period: 'Fall 2016 – Winter 2020',
+  period: '',
 };
 
 const TimelineCard = ({ exp, index }) => {
