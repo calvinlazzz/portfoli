@@ -80,12 +80,12 @@ export const WavyBackground = ({
       ref={canvasRef}
       id="canvas"
       style={{
-        position: 'fixed',
+        position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: -1,
+        zIndex: 0,
       }}
     ></canvas>
   );

@@ -1,158 +1,128 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Box, Typography, Container, useTheme } from "@mui/material";
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const skills = [
-  "Java",
-  "JavaScript",
-  "React",
-  "Node.js",
-  "Express",
-  "PostgreSQL",
-  "Python",
-  "Django",
-  "HTML5",
-  "CSS3",
-  "Tailwind CSS",
-  "Git/GitHub",
-  "CI/CD",
-  "Docker",
-  "Jenkins",
-  "REST APIs",
-  "Software Testing",
-  "Agile Methodologies",
+const experiences = [
+  {
+    role: 'Software Engineering Professional 1 – DeviceOS QA',
+    company: 'Fiserv',
+    period: 'Sep 2024 – Present',
+    location: 'Sunnyvale, CA',
+    highlights: [
+      'Optimized CI/CD Pipelines: Migrated Jenkins pipelines to a highly optimized host and implemented Docker for ROM building, accelerating the ROM signing process by 70%.',
+      'QA Automation: Developed and deployed Python and shell scripts to automate regression, stress, and sanity testing, significantly streamlining daily workflows for the DeviceOS QA team.',
+      'Compliance & Hardware Testing: Led the testing and implementation of Bluetooth functionality across Clover point-of-sale devices, ensuring strict adherence to PCI compliance standards.',
+      'Deployment Validation: Tested and validated production-level server deployments, managing cloud targeting and discovery routing across multiple geographic regions to ensure stable release rollouts.',
+    ],
+  },
+  {
+    role: 'Java Developer Junior Instructor',
+    company: 'Per Scholas',
+    period: 'Apr 2022 – Aug 2024',
+    location: 'Remote',
+    highlights: [
+      'Collaborated with instructional teams to design, develop, and deliver comprehensive full-stack Java curriculum.',
+      'Mentored students on core software engineering principles, debugging techniques, and best practices in object-oriented programming.',
+    ],
+  },
+  {
+    role: 'Software Tester',
+    company: 'Testlio',
+    period: 'Sep 2021 – Apr 2022',
+    location: 'Remote / Contract',
+    highlights: [
+      'Executed rigorous testing protocols to identify, document, and track software defects, maintaining high standards for the end-user experience.',
+    ],
+  },
 ];
 
-// The distance each skill travels vertically
-const CAROUSEL_TRAVEL_DISTANCE = 200;
+const education = {
+  degree: 'BA Computer Science (150 credits completed)',
+  school: 'University of California, Santa Cruz',
+  period: 'Fall 2016 – Winter 2020',
+};
 
-const Skill = ({ i, scrollYProgress }) => {
-  const totalSkills = skills.length;
-
-  // For each skill, create an input and output range for the animation
-  const inputRange = [
-    (i - 0.8) / totalSkills,
-    i / totalSkills,
-    (i + 0.8) / totalSkills,
-  ];
-
-  // Animate Y position to create the carousel effect
-  const y = useTransform(scrollYProgress, inputRange, [CAROUSEL_TRAVEL_DISTANCE, 0, -CAROUSEL_TRAVEL_DISTANCE]);
-  // Animate opacity to fade in and out
-  const opacity = useTransform(scrollYProgress, inputRange, [0.2, 1, 0.2]);
-  // Animate scale to grow and shrink
-  const scale = useTransform(scrollYProgress, inputRange, [0.8, 1, 0.8]);
+const TimelineCard = ({ exp, index }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isLeft = index % 2 === 0;
 
   return (
-    <motion.div style={{ y, opacity, scale, position: 'absolute', width: '100%' }}>
-      <Typography
-        variant="h2"
-        component="h1"
-        sx={{
-          fontWeight: 'bold', color: 'white', textAlign: 'left', whiteSpace: 'nowrap', paddingLeft: '2rem'
-        }}
-      >
-        {skills[i]}
-      </Typography>
+    <motion.div
+      ref={ref}
+      className={`timeline-item ${isLeft ? 'timeline-item--left' : 'timeline-item--right'}`}
+      initial={{ opacity: 0, x: isLeft ? -60 : 60 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      <div className="timeline-dot"></div>
+      <div className="timeline-card">
+        <div className="timeline-card__header">
+          <h3 className="timeline-card__role">{exp.role}</h3>
+          <span className="timeline-card__company">{exp.company}</span>
+        </div>
+        <div className="timeline-card__meta">
+          <span>{exp.period}</span>
+          <span>{exp.location}</span>
+        </div>
+        <ul className="timeline-card__highlights">
+          {exp.highlights.map((item, i) => (
+            <motion.li
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+            >
+              {item}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
     </motion.div>
   );
 };
 
 const Experience = () => {
-  const theme = useTheme();
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end']
-  });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <Box>
-      <Box
-        // This is the container that will be scrolled through, driving the animation.
-        ref={containerRef}
-        sx={{ height: `${skills.length * 30}vh`, position: 'relative' }}
-      >
-        {/* This is the sticky viewport that stays on screen */}
-        <Box
-          sx={{
-            position: "sticky",
-            top: 0,
-            height: "100vh",
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '5rem 0',
-          }}
+    <section id="experience" className="experience-section" ref={ref}>
+      <div className="section-container">
+        <motion.div
+          className="section-header"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          {/* Title and Description */}
-          <Box sx={{ textAlign: "center", mb: 8 }}>
-            <Typography variant="h2" component="h1" gutterBottom>
-              My Skills & Experience
-            </Typography>
-            <Typography variant="h6" color="text.secondary" paragraph>
-              As I've grown as a developer, I've worked with a variety of tools and
-              technologies. Here are some of the key skills I bring to the table.
-            </Typography>
-          </Box>
+          <h2 className="section-title">Experience</h2>
+          <p className="section-subtitle">
+            My professional journey in software engineering, QA automation, and DevOps.
+          </p>
+        </motion.div>
 
-          {/* The visual bubble and the container for the animated skills */}
-          <Box
-            sx={{
-              position: 'relative',
-              height: '150px',
-              width: { xs: '90%', md: '80%' },
-              maxWidth: '600px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {/* The iMessage bubble background */}
-            <Box
-              sx={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                backgroundColor: theme.palette.primary.main,
-                borderRadius: '2rem',
-                // Add the message bubble tail
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: '-2px',
-                  right: '-10px',
-                  width: '20px',
-                  height: '20px',
-                  backgroundColor: theme.palette.primary.main,
-                  // Create the curve on the opposite corner for the right side
-                  borderBottomLeftRadius: '15px',
-                  transform: 'rotate(-30deg)',
-                },
-              }}
-            />
-            {/* This container clips the skills as they move out of the bubble */}
-            <Box
-              sx={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                overflow: 'hidden',
-                borderRadius: '2rem', // Match the bubble's border radius
-              }}
-            >
-              {/* This inner container centers the absolute-positioned skills */}
-              <Box sx={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-                {skills.map((_, i) => (
-                  <Skill key={i} i={i} scrollYProgress={scrollYProgress} />
-                ))}
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+        <div className="timeline">
+          <div className="timeline-line"></div>
+          {experiences.map((exp, index) => (
+            <TimelineCard key={index} exp={exp} index={index} />
+          ))}
+        </div>
+
+        {/* Education */}
+        <motion.div
+          className="education-card"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          <div className="education-icon">🎓</div>
+          <div>
+            <h3 className="education-degree">{education.degree}</h3>
+            <p className="education-school">{education.school}</p>
+            <p className="education-period">{education.period}</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 

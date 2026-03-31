@@ -16,39 +16,39 @@ app.get('/api/projects', async (req, res) => {
   const projectsData = [
     {
         id: 1,
-        name: "My Awesome Project 1",
-        description: "A description of my first project.",
-        imageUrl: "/images/p1.jpeg", // Updated path
-        liveUrl: "https://project1.com",
-        githubUrl: "https://github.com/youruser/project1",
-        technologiesUsed: ["React", "Node.js"]
+        name: "OP-ADB",
+        description: "Full-stack internal web app using JavaScript, React, and Python to execute ADB functions, automated scripts, and API calls.",
+        imageUrl: "/images/p1.jpeg",
+        liveUrl: "#",
+        githubUrl: "https://github.com/calvinlazzz",
+        technologiesUsed: ["JavaScript", "React", "Python"]
     },
     {
         id: 2,
-        name: "Cool App Demo",
-        description: "This app does cool things.",
+        name: "Freelance Web Development",
+        description: "Designed, developed, and deployed four client websites — two custom WordPress sites and two full-stack web applications.",
         imageUrl: "/images/p2.png",
-        liveUrl: "https://project2.com",
-        githubUrl: "https://github.com/youruser/project2",
-        technologiesUsed: ["React", "Express", "PostgreSQL"]
+        liveUrl: "#",
+        githubUrl: "https://github.com/calvinlazzz",
+        technologiesUsed: ["Python", "HTML", "CSS", "WordPress"]
     },
     {
         id: 3,
-        name: "Cool App Demo2",
-        description: "This app does cool things.",
+        name: "Homelab Infrastructure",
+        description: "Personal Linux home server to self-host client websites and applications, managing domain routing, security protocols, and system uptime.",
         imageUrl: "/images/p3.png",
-        liveUrl: "https://project2.com",
-        githubUrl: "https://github.com/youruser/project2",
-        technologiesUsed: ["React", "Express", "PostgreSQL"]
+        liveUrl: "#",
+        githubUrl: "https://github.com/calvinlazzz",
+        technologiesUsed: ["Linux", "Docker", "Networking"]
     },
     {
         id: 4,
-        name: "Cool App Demo3",
-        description: "This app does cool things.",
+        name: "Portfolio Website",
+        description: "This portfolio site — built with React, Framer Motion, and Tailwind CSS with animated parallax project displays.",
         imageUrl: "/images/p4.png",
-        liveUrl: "https://project2.com",
-        githubUrl: "https://github.com/youruser/project2",
-        technologiesUsed: ["React", "Express", "PostgreSQL"]
+        liveUrl: "#",
+        githubUrl: "https://github.com/calvinlazzz/portfoli",
+        technologiesUsed: ["React", "Framer Motion", "Tailwind CSS"]
     }
     // Add all your project data here
 ];

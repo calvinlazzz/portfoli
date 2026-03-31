@@ -21,18 +21,15 @@ const Portfolio = () => {
         }
         const data = await response.json();
 
-        // The parallax component looks best with at least 15 items.
-        // We'll duplicate the data to ensure there's enough to fill the rows.
         if (data.length > 0) {
-            const extendedData = [];
-            while (extendedData.length < 15) {
-              extendedData.push(...data);
-            }
-            setProjects(extendedData.slice(0, 15));
+          const extendedData = [];
+          while (extendedData.length < 15) {
+            extendedData.push(...data);
+          }
+          setProjects(extendedData.slice(0, 15).map((p, i) => ({ ...p, id: `${p.id}-${i}` })));
         } else {
-            setProjects([]);
+          setProjects([]);
         }
-
       } catch (err) {
         console.error("Failed to fetch projects:", err);
         setError(err.message);
@@ -46,23 +43,41 @@ const Portfolio = () => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <CircularProgress />
-      </Box>
+      <section id="projects">
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          <CircularProgress sx={{ color: '#90caf9' }} />
+        </Box>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <Typography color="error">Failed to load projects: {error}</Typography>
-      </Box>
+      <section id="projects">
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          <Typography color="error">Failed to load projects: {error}</Typography>
+        </Box>
+      </section>
     );
   }
 
   return (
-    <HeroParallax products={projects} />
-
+    <section id="projects">
+      <HeroParallax
+        products={projects}
+        header={
+          <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
+            <h1 className="text-2xl md:text-7xl font-bold text-white">
+              Projects & Work
+            </h1>
+            <p className="max-w-2xl text-base md:text-xl mt-8 text-neutral-300">
+              A collection of projects showcasing test automation frameworks, DevOps pipelines,
+              and full-stack applications I've built and contributed to.
+            </p>
+          </div>
+        }
+      />
+    </section>
   );
 };
 
