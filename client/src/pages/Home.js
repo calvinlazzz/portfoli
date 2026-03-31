@@ -11,8 +11,8 @@ const letterVariants = {
   }),
 };
 
-const AnimatedText = ({ text, className }) => (
-  <span className={className} style={{ display: 'inline-flex', flexWrap: 'wrap' }}>
+const BubbleText = ({ text }) => (
+  <span style={{ display: 'inline-flex', flexWrap: 'wrap' }}>
     {text.split('').map((char, i) => (
       <motion.span
         key={i}
@@ -20,7 +20,23 @@ const AnimatedText = ({ text, className }) => (
         variants={letterVariants}
         initial="hidden"
         animate="visible"
+        className="bubble-letter"
         style={{ display: 'inline-block' }}
+        onMouseEnter={(e) => {
+          e.target.classList.add('bubble-letter--active');
+          // Also animate neighbors
+          const parent = e.target.parentElement;
+          const siblings = parent.children;
+          if (siblings[i - 1]) siblings[i - 1].classList.add('bubble-letter--neighbor');
+          if (siblings[i + 1]) siblings[i + 1].classList.add('bubble-letter--neighbor');
+        }}
+        onMouseLeave={(e) => {
+          e.target.classList.remove('bubble-letter--active');
+          const parent = e.target.parentElement;
+          const siblings = parent.children;
+          if (siblings[i - 1]) siblings[i - 1].classList.remove('bubble-letter--neighbor');
+          if (siblings[i + 1]) siblings[i + 1].classList.remove('bubble-letter--neighbor');
+        }}
       >
         {char === ' ' ? '\u00A0' : char}
       </motion.span>
@@ -42,7 +58,7 @@ const Home = () => {
           Hello, I'm
         </motion.p>
         <h1 className="hero-name">
-          <AnimatedText text="Calvin La" />
+          <BubbleText text="Calvin La" />
         </h1>
         <motion.p
           className="hero-tagline"

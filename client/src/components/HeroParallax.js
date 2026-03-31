@@ -6,7 +6,7 @@ import {
   useSpring,
 } from "framer-motion";
 
-export const HeroParallax = ({ products, header }) => {
+export const HeroParallax = ({ products, header, onProductClick }) => {
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
@@ -62,6 +62,7 @@ export const HeroParallax = ({ products, header }) => {
               product={product}
               translate={translateX}
               key={product.id}
+              onClick={onProductClick}
             />
           ))}
         </motion.div>
@@ -71,6 +72,7 @@ export const HeroParallax = ({ products, header }) => {
               product={product}
               translate={translateXReverse}
               key={product.id}
+              onClick={onProductClick}
             />
           ))}
         </motion.div>
@@ -80,6 +82,7 @@ export const HeroParallax = ({ products, header }) => {
               product={product}
               translate={translateX}
               key={product.id}
+              onClick={onProductClick}
             />
           ))}
         </motion.div>
@@ -102,7 +105,7 @@ export const Header = () => {
   );
 };
 
-export const ProductCard = ({ product, translate }) => {
+export const ProductCard = ({ product, translate, onClick }) => {
   return (
     <motion.div
       style={{
@@ -112,23 +115,19 @@ export const ProductCard = ({ product, translate }) => {
         y: -20,
       }}
       key={product.id}
-      className="group/product h-96 w-[30rem] relative shrink-0"
+      className="group/product h-96 w-[30rem] relative shrink-0 cursor-pointer"
+      onClick={() => onClick && onClick(product)}
     >
-      <a
-        href={product.liveUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block group-hover/product:shadow-2xl"
-      >
+      <div className="block group-hover/product:shadow-2xl">
         <img
           src={product.imageUrl}
           height="600"
           width="600"
-          className="object-cover object-left-top absolute h-full w-full inset-0"
+          className="object-cover object-left-top absolute h-full w-full inset-0 rounded-xl"
           alt={product.name}
         />
-      </a>
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
+      </div>
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none rounded-xl"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
         {product.name}
       </h2>
