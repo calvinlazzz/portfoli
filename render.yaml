@@ -1,21 +1,10 @@
 # portfoli/render.yaml
 
 services:
-  # Frontend Service (Static Site) - CORRECTED
-  - type: web           # Correct general type for web services and static sites
+  # Frontend Service (Static Site)
+  - type: web
     name: portfolio-app
-    runtime: static     # *** THIS IS CRUCIAL: Tells Render it's a static site ***
-    # startCommand: npm start
-    #plan: free          # Optional, defaults to free if available
+    runtime: static
     rootDir: client
     buildCommand: npm install && npm run build
     staticPublishPath: build
-  # Backend Service (Node.js Web Service) - REMAINS THE SAME, as it's correctly configured
-  - type: web
-    name: portfolio-app-server
-    env: node           # Correctly identifies it as a Node.js environment
-    # You could also use: runtime: node (alternative to env: node)
-    plan: free
-    rootDir: server
-    buildCommand: npm install
-    startCommand: node src/app.js
