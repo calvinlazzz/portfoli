@@ -11,38 +11,49 @@ const letterVariants = {
   }),
 };
 
-const BubbleText = ({ text }) => (
-  <span style={{ display: 'inline-flex', flexWrap: 'wrap' }}>
-    {text.split('').map((char, i) => (
-      <motion.span
-        key={i}
-        custom={i}
-        variants={letterVariants}
-        initial="hidden"
-        animate="visible"
-        className="bubble-letter"
-        style={{ display: 'inline-block' }}
-        onMouseEnter={(e) => {
-          e.target.classList.add('bubble-letter--active');
-          // Also animate neighbors
-          const parent = e.target.parentElement;
-          const siblings = parent.children;
-          if (siblings[i - 1]) siblings[i - 1].classList.add('bubble-letter--neighbor');
-          if (siblings[i + 1]) siblings[i + 1].classList.add('bubble-letter--neighbor');
-        }}
-        onMouseLeave={(e) => {
-          e.target.classList.remove('bubble-letter--active');
-          const parent = e.target.parentElement;
-          const siblings = parent.children;
-          if (siblings[i - 1]) siblings[i - 1].classList.remove('bubble-letter--neighbor');
-          if (siblings[i + 1]) siblings[i + 1].classList.remove('bubble-letter--neighbor');
-        }}
-      >
-        {char === ' ' ? '\u00A0' : char}
-      </motion.span>
-    ))}
-  </span>
-);
+const fastLetterVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.015, duration: 0.3, ease: 'easeOut' },
+  }),
+};
+
+const BubbleText = ({ text, className, fast }) => {
+  const variants = fast ? fastLetterVariants : letterVariants;
+  return (
+    <span className={className} style={{ display: 'inline-flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          custom={i}
+          variants={variants}
+          initial="hidden"
+          animate="visible"
+          className="bubble-letter"
+          style={{ display: 'inline-block' }}
+          onMouseEnter={(e) => {
+            e.target.classList.add('bubble-letter--active');
+            const parent = e.target.parentElement;
+            const siblings = parent.children;
+            if (siblings[i - 1]) siblings[i - 1].classList.add('bubble-letter--neighbor');
+            if (siblings[i + 1]) siblings[i + 1].classList.add('bubble-letter--neighbor');
+          }}
+          onMouseLeave={(e) => {
+            e.target.classList.remove('bubble-letter--active');
+            const parent = e.target.parentElement;
+            const siblings = parent.children;
+            if (siblings[i - 1]) siblings[i - 1].classList.remove('bubble-letter--neighbor');
+            if (siblings[i + 1]) siblings[i + 1].classList.remove('bubble-letter--neighbor');
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
 
 const Home = () => {
   return (
@@ -60,22 +71,22 @@ const Home = () => {
         <h1 className="hero-name">
           <BubbleText text="Calvin La" />
         </h1>
-        <motion.p
+        <motion.div
           className="hero-tagline"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
         >
-          Software Engineer &mdash; QA Automation &amp; DevOps
-        </motion.p>
-        <motion.p
+          <BubbleText text="Software Engineer — QA Automation & DevOps" fast />
+        </motion.div>
+        <motion.div
           className="hero-description"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.6 }}
         >
-          Building robust test automation, CI/CD pipelines, and quality-driven software at Fiserv.
-        </motion.p>
+          <BubbleText text="Building robust test automation, CI/CD pipelines, and quality-driven software at Fiserv." fast />
+        </motion.div>
         <motion.div
           className="hero-buttons"
           initial={{ opacity: 0, y: 20 }}

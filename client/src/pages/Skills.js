@@ -1,51 +1,124 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 const skillCategories = [
   {
     title: 'Languages',
-    skills: ['Python', 'JavaScript', 'Java', 'Kotlin', 'C/C++', 'Bash/Shell', 'SQL', 'HTML/CSS'],
+    skills: [
+      { name: 'Python', icon: '🐍' },
+      { name: 'JavaScript', icon: '⚡' },
+      { name: 'Java', icon: '☕' },
+      { name: 'Kotlin', icon: '🟣' },
+      { name: 'C/C++', icon: '⚙️' },
+      { name: 'Bash/Shell', icon: '💻' },
+      { name: 'SQL', icon: '🗃️' },
+      { name: 'HTML/CSS', icon: '🌐' },
+    ],
   },
   {
     title: 'Testing & QA',
-    skills: ['Selenium', 'Jest', 'Regression Testing', 'Stress Testing', 'Sanity Testing', 'PCI Compliance Testing'],
+    skills: [
+      { name: 'Selenium', icon: '🧪' },
+      { name: 'Jest', icon: '🃏' },
+      { name: 'Regression Testing', icon: '🔄' },
+      { name: 'Stress Testing', icon: '💪' },
+      { name: 'Sanity Testing', icon: '✅' },
+      { name: 'PCI Compliance', icon: '🔒' },
+    ],
   },
   {
     title: 'DevOps & Tools',
-    skills: ['Docker', 'Jenkins', 'Git', 'Linux/Unix', 'Jira', 'CI/CD Pipelines'],
+    skills: [
+      { name: 'Docker', icon: '🐳' },
+      { name: 'Jenkins', icon: '🔧' },
+      { name: 'Git', icon: '📦' },
+      { name: 'Linux/Unix', icon: '🐧' },
+      { name: 'Jira', icon: '📋' },
+      { name: 'CI/CD', icon: '🚀' },
+    ],
   },
   {
     title: 'Frameworks & Tech',
-    skills: ['React', 'Django', 'MySQL', 'Win32 API', 'WordPress'],
+    skills: [
+      { name: 'React', icon: '⚛️' },
+      { name: 'Django', icon: '🎸' },
+      { name: 'MySQL', icon: '🐬' },
+      { name: 'Win32 API', icon: '🪟' },
+      { name: 'WordPress', icon: '📝' },
+    ],
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+/* ─── Folder (closed state) ─── */
+const FolderPreview = ({ category, onClick, index, isInView }) => {
+  // Show up to 4 preview icons in a 2×2 grid
+  const preview = category.skills.slice(0, 4);
+
+  return (
+    <motion.div
+      className="ios-folder"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.4, delay: index * 0.1, ease: 'easeOut' }}
+      onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <div className="ios-folder__icon-grid">
+        {preview.map((skill) => (
+          <div key={skill.name} className="ios-folder__mini-icon">
+            <span>{skill.icon}</span>
+          </div>
+        ))}
+      </div>
+      <span className="ios-folder__title">{category.title}</span>
+    </motion.div>
+  );
 };
 
-const categoryVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
-
-const pillVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: (i) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { delay: i * 0.04, duration: 0.3, ease: 'easeOut' },
-  }),
-};
+/* ─── Expanded folder overlay ─── */
+const FolderExpanded = ({ category, onClose }) => (
+  <motion.div
+    className="ios-folder-overlay"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.2 }}
+    onClick={onClose}
+  >
+    <motion.div
+      className="ios-folder-expanded"
+      initial={{ scale: 0.7, opacity: 0, y: 40 }}
+      animate={{ scale: 1, opacity: 1, y: 0 }}
+      exit={{ scale: 0.7, opacity: 0, y: 40 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h3 className="ios-folder-expanded__title">{category.title}</h3>
+      <div className="ios-folder-expanded__grid">
+        {category.skills.map((skill, i) => (
+          <motion.div
+            key={skill.name}
+            className="ios-folder-expanded__item"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.04, type: 'spring', stiffness: 350, damping: 20 }}
+          >
+            <div className="ios-folder-expanded__icon">
+              <span>{skill.icon}</span>
+            </div>
+            <span className="ios-folder-expanded__label">{skill.name}</span>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  </motion.div>
+);
 
 const Skills = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [openFolder, setOpenFolder] = useState(null);
 
   return (
     <section id="skills" className="skills-section" ref={ref}>
@@ -62,37 +135,27 @@ const Skills = () => {
           </p>
         </motion.div>
 
-        <motion.div
-          className="skills-grid"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-        >
-          {skillCategories.map((category) => (
-            <motion.div
+        <div className="ios-folders-grid">
+          {skillCategories.map((category, index) => (
+            <FolderPreview
               key={category.title}
-              className="skills-category"
-              variants={categoryVariants}
-            >
-              <h3 className="skills-category__title">{category.title}</h3>
-              <div className="skills-pills">
-                {category.skills.map((skill, i) => (
-                  <motion.span
-                    key={skill}
-                    className="skill-pill"
-                    custom={i}
-                    variants={pillVariants}
-                    whileHover={{ scale: 1.08, y: -2 }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
+              category={category}
+              index={index}
+              isInView={isInView}
+              onClick={() => setOpenFolder(category)}
+            />
           ))}
-        </motion.div>
+        </div>
       </div>
+
+      <AnimatePresence>
+        {openFolder && (
+          <FolderExpanded
+            category={openFolder}
+            onClose={() => setOpenFolder(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
