@@ -1,70 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { HeroParallax } from '../components/HeroParallax';
-import { Box, CircularProgress, Typography } from '@mui/material';
+
+const projectsData = [
+  {
+    id: 1,
+    name: "OP-ADB",
+    description: "Full-stack internal web app using JavaScript, React, and Python to execute ADB functions, automated scripts, and API calls.",
+    imageUrl: "/images/p1.jpeg",
+    liveUrl: "#",
+    githubUrl: "https://github.com/calvinlazzz",
+    technologiesUsed: ["JavaScript", "React", "Python"],
+  },
+  {
+    id: 2,
+    name: "Freelance Web Development",
+    description: "Designed, developed, and deployed four client websites — two custom WordPress sites and two full-stack web applications.",
+    imageUrl: "/images/p2.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/calvinlazzz",
+    technologiesUsed: ["Python", "HTML", "CSS", "WordPress"],
+  },
+  {
+    id: 3,
+    name: "Homelab Infrastructure",
+    description: "Personal Linux home server to self-host client websites and applications, managing domain routing, security protocols, and system uptime.",
+    imageUrl: "/images/p3.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/calvinlazzz",
+    technologiesUsed: ["Linux", "Docker", "Networking"],
+  },
+  {
+    id: 4,
+    name: "Portfolio Website",
+    description: "This portfolio site — built with React, Framer Motion, and Tailwind CSS with animated parallax project displays.",
+    imageUrl: "/images/p4.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/calvinlazzz/portfoli",
+    technologiesUsed: ["React", "Framer Motion", "Tailwind CSS"],
+  },
+];
+
+// Extend to 15 items for the 3-row parallax display
+const extendedProjects = [];
+while (extendedProjects.length < 15) {
+  extendedProjects.push(...projectsData);
+}
+const products = extendedProjects.slice(0, 15).map((p, i) => ({ ...p, id: `${p.id}-${i}` }));
 
 const Portfolio = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        const apiUrl = process.env.NODE_ENV === 'production'
-          ? process.env.REACT_APP_API_URL || 'https://portfolio-app-server.onrender.com/api/projects'
-          : 'http://localhost:5000/api/projects';
-
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        const data = await response.json();
-
-        if (data.length > 0) {
-          const extendedData = [];
-          while (extendedData.length < 15) {
-            extendedData.push(...data);
-          }
-          setProjects(extendedData.slice(0, 15).map((p, i) => ({ ...p, id: `${p.id}-${i}` })));
-        } else {
-          setProjects([]);
-        }
-      } catch (err) {
-        console.error("Failed to fetch projects:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
-  if (loading) {
-    return (
-      <section id="projects">
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-          <CircularProgress sx={{ color: '#90caf9' }} />
-        </Box>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="projects">
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-          <Typography color="error">Failed to load projects: {error}</Typography>
-        </Box>
-      </section>
-    );
-  }
-
   return (
     <section id="projects">
       <HeroParallax
-        products={projects}
+        products={products}
         header={
           <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
             <h1 className="text-2xl md:text-7xl font-bold text-white">
