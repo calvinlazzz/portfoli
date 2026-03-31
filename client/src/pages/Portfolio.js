@@ -12,7 +12,7 @@ const Portfolio = () => {
       try {
         setLoading(true);
         const apiUrl = process.env.NODE_ENV === 'production'
-          ? 'https://portfolio-app-server.onrender.com/api/projects'
+          ? process.env.REACT_APP_API_URL || 'https://portfolio-app-server.onrender.com/api/projects'
           : 'http://localhost:5000/api/projects';
 
         const response = await fetch(apiUrl);

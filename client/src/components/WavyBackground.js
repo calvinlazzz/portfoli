@@ -30,12 +30,11 @@ export const WavyBackground = ({
     ctx = canvas.getContext("2d");
     w = ctx.canvas.width = window.innerWidth;
     h = ctx.canvas.height = window.innerHeight;
-    ctx.filter = `blur(${blur}px)`;
+    // ctx.filter is not supported in Safari — blur is applied via CSS instead
     nt = 0;
     window.onresize = function () {
       w = ctx.canvas.width = window.innerWidth;
       h = ctx.canvas.height = window.innerHeight;
-      ctx.filter = `blur(${blur}px)`;
     };
     render();
   };
@@ -86,6 +85,8 @@ export const WavyBackground = ({
         width: '100%',
         height: '100%',
         zIndex: 0,
+        filter: `blur(${blur}px)`,       // CSS blur — works in all browsers including Safari
+        WebkitFilter: `blur(${blur}px)`, // Safari prefix
       }}
     ></canvas>
   );
