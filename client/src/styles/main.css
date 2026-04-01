@@ -152,6 +152,18 @@ body {
   color: rgba(144, 202, 249, 0.7);
 }
 
+/* Hero name: bright white glow instead of blue */
+.hero-name .bubble-letter--active {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.7),
+               0 0 30px rgba(255, 255, 255, 0.35),
+               0 0 60px rgba(255, 255, 255, 0.15);
+}
+
+.hero-name .bubble-letter--neighbor {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .hero-tagline {
   font-size: clamp(1.1rem, 3vw, 1.5rem);
   color: var(--color-primary);

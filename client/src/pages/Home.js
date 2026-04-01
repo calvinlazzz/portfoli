@@ -22,35 +22,50 @@ const fastLetterVariants = {
 
 const BubbleText = ({ text, className, fast }) => {
   const variants = fast ? fastLetterVariants : letterVariants;
+  const words = text.split(' ');
+  let charIndex = 0;
+
   return (
-    <span className={className} style={{ display: 'inline-flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {text.split('').map((char, i) => (
-        <motion.span
-          key={i}
-          custom={i}
-          variants={variants}
-          initial="hidden"
-          animate="visible"
-          className="bubble-letter"
-          style={{ display: 'inline-block' }}
-          onMouseEnter={(e) => {
-            e.target.classList.add('bubble-letter--active');
-            const parent = e.target.parentElement;
-            const siblings = parent.children;
-            if (siblings[i - 1]) siblings[i - 1].classList.add('bubble-letter--neighbor');
-            if (siblings[i + 1]) siblings[i + 1].classList.add('bubble-letter--neighbor');
-          }}
-          onMouseLeave={(e) => {
-            e.target.classList.remove('bubble-letter--active');
-            const parent = e.target.parentElement;
-            const siblings = parent.children;
-            if (siblings[i - 1]) siblings[i - 1].classList.remove('bubble-letter--neighbor');
-            if (siblings[i + 1]) siblings[i + 1].classList.remove('bubble-letter--neighbor');
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
+    <span className={className} style={{ display: 'block', textAlign: 'center' }}>
+      {words.map((word, wi) => {
+        const letters = word.split('').map((char, ci) => {
+          const i = charIndex++;
+          return (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              className="bubble-letter"
+              style={{ display: 'inline-block' }}
+              onMouseEnter={(e) => {
+                e.target.classList.add('bubble-letter--active');
+                const prev = e.target.previousElementSibling;
+                const next = e.target.nextElementSibling;
+                if (prev) prev.classList.add('bubble-letter--neighbor');
+                if (next) next.classList.add('bubble-letter--neighbor');
+              }}
+              onMouseLeave={(e) => {
+                e.target.classList.remove('bubble-letter--active');
+                const prev = e.target.previousElementSibling;
+                const next = e.target.nextElementSibling;
+                if (prev) prev.classList.remove('bubble-letter--neighbor');
+                if (next) next.classList.remove('bubble-letter--neighbor');
+              }}
+            >
+              {char}
+            </motion.span>
+          );
+        });
+        charIndex++; // account for the space
+        return (
+          <span key={`w${wi}`} style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+            {letters}
+            {wi < words.length - 1 && <span style={{ display: 'inline-block', width: '0.3em' }}>{' '}</span>}
+          </span>
+        );
+      })}
     </span>
   );
 };
